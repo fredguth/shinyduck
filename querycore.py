@@ -7,7 +7,9 @@ from shiny import module, reactive, render, ui
 
 
 @module.ui
-def query_output_ui(remove_id, qry=f"from read_parquet('https://blobs.duckdb.org/data/yellow_tripdata_2010-01.parquet') limit 10"):
+# def query_output_ui(remove_id, qry=f"from read_parquet('https://blobs.duckdb.org/data/yellow_tripdata_2010-01.parquet') limit 10"):
+# 'https://blobs.duckdb.org/databases/stations.duckdb'
+def query_output_ui(remove_id, qry=f"from read_csv('https://blobs.duckdb.org/data/Star_Trek-Season_1.csv') limit 10"):
     return (
         ui.card(
             {"id": remove_id},
