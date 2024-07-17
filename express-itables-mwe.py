@@ -46,10 +46,8 @@ con = duckdb.connect(str(db_file), read_only=True)
 ui.input_text("qry", "SQL Query", "SELECT * from trips limit 10")
 
 
-@render.data_frame
-def table():
 
-    # df = con.sql(f"""{input.qry().replace('\n', ' ')}""").df()
-    df = con.sql(f"{input.qry()}").df()
-    return render.DataGrid(df)
-    # ui.HTML(DT(df, buttons=["copyHtml5", "csvHtml5", "excelHtml5"])))
+@render.express
+def table():
+    df = con.sql(f"{input.qry().replace("\n", " ")}").df()
+    ui.HTML(DT(df, buttons=["copyHtml5", "csvHtml5", "excelHtml5"]))
