@@ -1,0 +1,4 @@
+duckdb
+shiny
+pandas
+itables
