@@ -53,7 +53,11 @@ ui.input_text("qry", "SQL Query", "SELECT * from trips limit 10")
 @render.express
 def table():
     
-    df = con.sql(f"{input.qry().replace('\n', ' ')}").df().reset_index(drop=True)
-    ui.HTML(DT(df)) 
+    @debounce(1) # wait ... seconds before changing input.qry
+    @reactive.Calc
+    def d_qry(): return input.qry().replace('\n', ' ')   
+    
+    df = con.sql(f"{d_qry()}").df()
+    ui.HTML(DT(df)) # the rendering of DT with buttons flickers with debounce
 
 

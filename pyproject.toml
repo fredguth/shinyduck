@@ -1,22 +1,20 @@
-[project]
+[tool.poetry]
 name = "shinyduck"
 version = "0.1.0"
-description = "Default template for PDM package"
-authors = [
-    {name = "Fred Guth", email = "fredguth@fredguth.com"},
-]
-dependencies = [
-    "duckdb",
-    "shiny>=0.10.2",
-    "pandas>=2.2.2",
-    "shinywidgets>=0.3.2",
-    "shinyswatch>=0.6.1",
-    "itables>=2.1.4",
-]
-requires-python = "==3.12.*"
+description = ""
+authors = ["Fred Guth <fredguth@fredguth.com>"]
 readme = "README.md"
-license = {text = "MIT"}
+
+[tool.poetry.dependencies]
+python = "^3.12"
+duckdb = "^1.0.0"
+shiny = "^1.0.0"
+pandas = "^2.2.2"
+shinywidgets = "^0.3.2"
+shinyswatch = "^0.7.0"
+itables = "^2.1.4"
 
 
-[tool.pdm]
-distribution = false
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
