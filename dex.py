@@ -5,7 +5,7 @@ from shiny.express import input, render, ui, module
 from shiny.ui import page_navbar, sidebar, Sidebar
 from shinywidgets import render_widget
 from functools import partial
-from shinywidgets import output_widget
+
 ui.page_opts(fillable=True)
 
 # @module
@@ -39,12 +39,13 @@ ui.page_opts(fillable=True)
 
 #     with ui.nav_panel("Ficha Técnica"):
 #         "Page B content"
-output_widget(class_="container-fluid")
+
 
 ui.tags.style(".bslib-sidebar-layout > .main { padding: 0px }")
 tables = ["Entes", "Receitas", "Despesas"]
 # ui.page_opts(theme=shinyswatch.theme.sandstone)
-ui.page_opts(fillable=Tru
+ui.page_opts(fillable=True)
+
 
 def menu():
     return [ui.p("Tabelas", style="control-label pb-0")] + [
@@ -52,7 +53,7 @@ def menu():
     ]
 
 
-with ui.sidebar(id="main_sidebar", gap=10):
+with ui.sidebar(id="main_sidebar", gap=.5):
     menu()
 
     ui.input_selectize("loc1", "Location 1", choices=tables, selected="Entes")
@@ -75,9 +76,6 @@ with ui.navset_card_underline(id="tbl_menu", selected="B", title="Entes", sideba
     ui.nav_spacer()
     ui.nav_spacer()
 
-
-
-ui.
 
 # "Table"
 # table(id="entes", title="Entes")

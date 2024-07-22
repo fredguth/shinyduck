@@ -19,18 +19,7 @@ def toggleButtons_ui() -> ui.TagChild:
         left="0%"
     )
     
-@module.server
-def counter_server(input, output, session, starting_value: int = 0):
-    count: reactive.value[int] = reactive.value(starting_value)
 
-    @reactive.effect
-    @reactive.event(input.button)
-    def _():
-        count.set(count() + 1)
-
-    @render.code
-    def out() -> str:
-        return f"Click count is {count()}"
 @module.server
 def toggleButtons_server(input: Inputs, output: Outputs, session: Session, choices: List[str], selected:Optional[str]=None):
     selected = selected or reactive.value(choices[0])
@@ -54,24 +43,48 @@ def toggleButtons_server(input: Inputs, output: Outputs, session: Session, choic
 
 
 
+@module.ui
+def tableShell_ui() -> ui.TagChild:
+    return ui.output_ui("tableShell")
+
+@module.server
+def tableShell_server(input, output, session, title:str=""):
+    @render.ui
+    def tableShell():
+        panels = ["Baixar", "Explorar", None, None, "Documentação", "Linhagem", "Qualidade", "Ficha Técnica", None, None, None, None, None]
+        children = [ui.nav_panel(c, f"Panel {c} content") if c else ui.nav_spacer() for c in panels]
+        sb = ui.sidebar("tbl_sb", open="closed", title=title, position="right")
+        return ui.navset_card_underline(id="tbl_card", selected="Explorar", sidebar=sb, title=title, *children)
+
+
 
 
 # =============================================================================
 # App that uses module
 # =============================================================================
 app_ui = ui.page_fluid(
-    toggleButtons_ui("menu1"),
-    theme=shinyswatch.theme.sandstone
+    tableShell_ui(id="shell"),
+    # toggleButtons_ui("menu1"),
+    # ui.output_ui("shell"),
+    
+    # theme=shinyswatch.theme.sandstone
 )
 
 
 def server(input, output, session):
-    choices = ["A", "B", "C", "D"]
-    selected = reactive.value(choices[0])
-    @reactive.effect
-    def _():
-        print(selected())
-    toggleButtons_server("menu1", choices, selected)
+    tableShell_server(id="shell", title="Entes")
+    # choices = ["Entes", "Receitas", "Despesas"]
+    # selected = reactive.value(choices[0])
+
+    # @render.ui
+    # def shell():    
+    #     tableShell_ui(id="shell", title="Entes"),
+    #     ui.br()
+        
+        
+    
+    # toggleButtons_server("menu1", choices, selected)
+    
     
 
 
