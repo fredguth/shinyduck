@@ -12,7 +12,7 @@ def toggleButtons_ui() -> ui.TagChild:
     
 
 @module.server
-def toggleButtons_server(input: Inputs, output: Outputs, session: Session, choices: List[str], selected:Optional[str]=None):
+def toggleButtons_server(input: Inputs, output: Outputs, session: Session, choices: List[str], selected=None):
     selected = selected or reactive.value(choices[0])
     @render.ui
     def menu():
@@ -39,10 +39,12 @@ def tableShell_ui() -> ui.TagChild:
     return ui.output_ui("tableShell")
 
 @module.server
-def tableShell_server(input, output, session, title:str=""):
+def tableShell_server(input, output, session, selected=None):
+    selected = selected or reactive.value("")
+
     @render.ui
     def tableShell():
-        t = f"Tabela: {title}"
+        t = f"Tabela: {selected()}"
         panels = ["Baixar", "Explorar", None, None, "Documentação", "Linhagem", "Qualidade", "Ficha Técnica", None, None, None, None, None]
         children = [ui.nav_panel(c, f"Panel {c} content") if c else ui.nav_spacer() for c in panels]
         sb = ui.sidebar("tbl_sb", open="closed", title=t, position="right")
@@ -71,8 +73,9 @@ def server(input, output, session):
     
     choices = ["Entes", "Receitas", "Despesas"]
     selected = reactive.value(choices[0])
+    
     toggleButtons_server("menu1", choices, selected)
-    tableShell_server(id="shell", title="Entes")
+    tableShell_server(id="shell", selected=selected)
 
     
     
