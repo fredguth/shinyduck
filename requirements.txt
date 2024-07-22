@@ -1,4 +1,6 @@
-duckdb
 shiny
 pandas
 itables
+shinyswatch
+micropip
+ipywidgets
